@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Dating App</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navContent">
@@ -16,20 +17,29 @@
       </li>
     </ul>
     <div class="float-right">
-        <form #loginForm="ngForm" *ngIf="!loggedIn()" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
-          <input #username="ngModel" class="form-control form-control-sm mr-sm-2" type="email" placeholder="email" aria-label="email" required name="UserName" [(ngModel)]="model.UserName">
-          <input #password="ngModel" class="form-control form-control-sm mr-sm-2" type="password" placeholder="password" aria-label="password" required name="Password" [(ngModel)]="model.Password">
-          <button [disabled]="!loginForm.valid" class="btn btn-info my-2 my-sm-0" type="submit">login</button>
-        </form>
+      <form #loginForm="ngForm" *ngIf="!loggedIn()" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+        <input #username="ngModel" class="form-control form-control-sm mr-sm-2" type="email" placeholder="email" aria-label="email"
+          required name="UserName" [(ngModel)]="model.UserName">
+        <input #password="ngModel" class="form-control form-control-sm mr-sm-2" type="password" placeholder="password" aria-label="password"
+          required name="Password" [(ngModel)]="model.Password">
+        <button [disabled]="!loginForm.valid" class="btn btn-info my-2 my-sm-0" type="submit">login</button>
+      </form>
+      <ul class="navbar-nav mr-auto">
+        <li *ngIf="loggedIn()" class="nav-item">
+          <a class="nav-link active" href="#" (click)="logout()">Sign Out</a>
+        </li>
         <li class="nav-item dropdown" *ngIf="loggedIn()">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Welcome User
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#"><i class="fa-user"></i>Edit Profile</a>
-            <a class="dropdown-item" href="#" (click)="logout()"><i class="fa-sign-out"></i>Logout</a>
+            <a class="dropdown-item" href="#">
+              <i class="fa-user"></i>Edit Profile</a>
+            <a class="dropdown-item" href="#" (click)="logout()">
+              <i class="fa-sign-out"></i>Logout</a>
           </div>
         </li>
+      </ul>
     </div>
   </div>
 </nav>
