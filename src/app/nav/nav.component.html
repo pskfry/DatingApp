@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Dating App</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navbarSupportedContent"
     aria-expanded="false" aria-label="Toggle navigation">
@@ -24,19 +24,23 @@
           required name="Password" [(ngModel)]="model.Password">
         <button [disabled]="!loginForm.valid" class="btn btn-info my-2 my-sm-0" type="submit">login</button>
       </form>
-      <ul class="navbar-nav mr-auto">
-        <li *ngIf="loggedIn()" class="nav-item">
+      <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
+        <li class="nav-item">
           <a class="nav-link active" href="#" (click)="logout()">Sign Out</a>
         </li>
-        <li class="nav-item dropdown" *ngIf="loggedIn()">
-          <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Welcome User
+      </ul>
+    </div>
+    <div class="float-right">
+      <ul class="navbar-nav mr-auto" dropdown>
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" dropdownToggle>
+            Welcome {{authService.decodedToken?.unique_name | titlecase}}
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <div class="dropdown-menu" *dropdownMenu>
             <a class="dropdown-item" href="#">
-              <i class="fa-user"></i>Edit Profile</a>
+              <fa name="user" class="mr-2"></fa>Edit Profile</a>
             <a class="dropdown-item" href="#" (click)="logout()">
-              <i class="fa-sign-out"></i>Logout</a>
+              <fa name="sign-out" class="mr-1"></fa>Logout</a>
           </div>
         </li>
       </ul>
