@@ -1,19 +1,15 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Dating App</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navbarSupportedContent"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navContent">
+<nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
+  <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="active" >Dating App</a>
+  <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Matches</a>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/member-lists']" routerLinkActive="active" >Matches</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Lists</a>
+        <a class="nav-link" [routerLink]="['/lists']" routerLinkActive="active" >Lists</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Messages</a>
+        <a class="nav-link" [routerLink]="['/messages']" routerLinkActive="active" >Messages</a>
       </li>
     </ul>
     <div class="float-right">
@@ -22,24 +18,24 @@
           required name="UserName" [(ngModel)]="model.UserName">
         <input #password="ngModel" class="form-control form-control-sm mr-sm-2" type="password" placeholder="password" aria-label="password"
           required name="Password" [(ngModel)]="model.Password">
-        <button [disabled]="!loginForm.valid" class="btn btn-info my-2 my-sm-0" type="submit">login</button>
+        <button [disabled]="!loginForm.valid" class="btn btn-light btn-sm" type="submit">login</button>
       </form>
       <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="#" (click)="logout()">Sign Out</a>
+          <a class="nav-link" (click)="logout()">Sign Out</a>
         </li>
       </ul>
     </div>
-    <div class="float-right">
+    <div class="float-right" *ngIf="loggedIn()">
       <ul class="navbar-nav mr-auto" dropdown>
         <li class="nav-item dropdown">
-          <a class="nav-link active dropdown-toggle" dropdownToggle>
+          <a class="nav-link dropdown-toggle" dropdownToggle>
             Welcome {{authService.decodedToken?.unique_name | titlecase}}
           </a>
           <div class="dropdown-menu" *dropdownMenu>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item">
               <fa name="user" class="mr-2"></fa>Edit Profile</a>
-            <a class="dropdown-item" href="#" (click)="logout()">
+            <a class="dropdown-item" (click)="logout()">
               <fa name="sign-out" class="mr-1"></fa>Logout</a>
           </div>
         </li>

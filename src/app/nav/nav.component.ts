@@ -4,6 +4,7 @@ import { AlertifyService } from '../_services/alertify.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tokenName } from '@angular/compiler';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -19,7 +20,7 @@ export class NavComponent implements OnInit {
   ];
 
   constructor(private authService: AuthService, private alertifyService: AlertifyService,
-    private jwtHelper: JwtHelperService) { }
+    private jwtHelper: JwtHelperService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -29,12 +30,15 @@ export class NavComponent implements OnInit {
       this.alertifyService.success('Logged in!');
     }, error => {
       this.alertifyService.error(error);
-    });
+    }, () =>
+      this.router.navigate(['/member-lists'])
+    );
   }
 
   logout() {
     this.authService.userToken = null;
     localStorage.removeItem('token');
+    this.router.navigate(['/home']);
     this.alertifyService.success('Logged out!');
   }
 
