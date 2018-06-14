@@ -19,7 +19,7 @@ export class NavComponent implements OnInit {
     'but wait! A third!'
   ];
 
-  constructor(private authService: AuthService, private alertifyService: AlertifyService,
+  constructor(public authService: AuthService, private alertifyService: AlertifyService,
     private jwtHelper: JwtHelperService, private router: Router) { }
 
   ngOnInit() {

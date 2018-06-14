@@ -3,7 +3,7 @@
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/member-lists']" routerLinkActive="active" >Matches</a>
+        <a class="nav-link" [routerLink]="['/member-list']" routerLinkActive="active" >Matches</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/lists']" routerLinkActive="active" >Lists</a>
@@ -22,14 +22,14 @@
       </form>
       <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" (click)="logout()">Sign Out</a>
+          <a class="nav-link active" (click)="logout()">Sign Out</a>
         </li>
       </ul>
     </div>
     <div class="float-right" *ngIf="loggedIn()">
       <ul class="navbar-nav mr-auto" dropdown>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" dropdownToggle>
+          <a class="nav-link active dropdown-toggle" dropdownToggle>
             Welcome {{authService.decodedToken?.unique_name | titlecase}}
           </a>
           <div class="dropdown-menu" *dropdownMenu>

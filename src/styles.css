@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+.member-tabset > .nav-tabs > li > a.active {
+    background-color: #53585C;
+}
+
+.member-tabset > .nav-tabs > li > a:hover {
+    border-width: 0px;
+    background-color: #353B40;
+}
