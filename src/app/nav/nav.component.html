@@ -22,7 +22,7 @@
       </form>
       <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link active" (click)="logout()">Sign Out</a>
+          <a class="nav-link active" style="cursor: pointer;" (click)="logout()">Sign Out</a>
         </li>
       </ul>
     </div>
@@ -33,7 +33,7 @@
             Welcome {{authService.decodedToken?.unique_name | titlecase}}
           </a>
           <div class="dropdown-menu" *dropdownMenu>
-            <a class="dropdown-item">
+            <a [routerLink]="['/member-edit']" routerLinkActive="active" class="dropdown-item">
               <fa name="user" class="mr-2"></fa>Edit Profile</a>
             <a class="dropdown-item" (click)="logout()">
               <fa name="sign-out" class="mr-1"></fa>Logout</a>

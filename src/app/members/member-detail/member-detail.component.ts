@@ -32,7 +32,7 @@ export class MemberDetailComponent implements OnInit {
         imageSize: NgxGalleryImageSize.Contain,
         preview: false
       }
-    ]
+    ];
 
     this.galleryImages = this.getImages();
   }
@@ -41,10 +41,12 @@ export class MemberDetailComponent implements OnInit {
     const imageUrls = [];
 
     for (let i = 0; i < this.user.photos.length; i++) {
+      console.log(this.user.photos[0]);
       imageUrls.push({
-        small: this.user.photoUrl,
-        medium: this.user.photoUrl,
-        big: this.user.photoUrl
+        small: this.user.photos[0].url,
+        medium: this.user.photos[0].url,
+        big: this.user.photos[0].url,
+        description: this.user.photos[0].description
       });
     }
 

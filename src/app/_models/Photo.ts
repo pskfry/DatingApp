@@ -1,11 +1,11 @@
 import { User } from './User';
 
 export interface Photo {
-    Id: number;
-    Url: string;
+    id: number;
+    url: string;
     isMainPhoto: boolean;
-    Description: string;
-    DateAdded: Date;
-    User: User;
-    UserId: number;
+    description: string;
+    dateAdded: Date;
+    user: User;
+    userId: number;
 }
