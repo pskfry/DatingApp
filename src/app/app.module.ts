@@ -17,6 +17,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 // services
 import { AlertifyService } from './_services/alertify.service';
@@ -35,6 +36,7 @@ import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
 
 // helper classes
 import { appRoutes } from './routes';
@@ -56,7 +58,8 @@ export function tokenGetter() {
     MessagesComponent,
     MemberCardComponent,
     MemberDetailComponent,
-    MemberEditComponent
+    MemberEditComponent,
+    PhotoEditorComponent
 ],
   imports: [
     BrowserModule,
@@ -74,7 +77,8 @@ export function tokenGetter() {
         whitelistedDomains: ['localhost:5000'],
         skipWhenExpired: true
       }
-    })
+    }),
+    FileUploadModule
   ],
   providers: [
     AuthService,

@@ -6,6 +6,6 @@ export interface Photo {
     isMainPhoto: boolean;
     description: string;
     dateAdded: Date;
-    user: User;
+    user?: User;
     userId: number;
 }

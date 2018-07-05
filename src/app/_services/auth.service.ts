@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { map } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,18 +13,31 @@ export class AuthService {
   baseUrl = 'http://localhost:5000/api/auth/';
   userToken: any;
   decodedToken: any;
+  private photoUrl = new BehaviorSubject<string>('../../assets/user.png');
+  userMainPhotoUrl = this.photoUrl.asObservable();
 
   constructor(private http: Http, private jwtHelper: JwtHelperService) { }
+
+  changeMemberPhoto(photoUrl: string) {
+    this.photoUrl.next(photoUrl);
+  }
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'login', model, this.requestOptions())
       .pipe(
         map((response: Response) => {
-          const user = response.json();
+          const token = response.json().jwtToken;
+          const user = response.json().userForNav;
+
+          if (token) {
+            localStorage.setItem('token', token.value);
+            this.decodedToken = this.jwtHelper.decodeToken(token.tokenString);
+            this.userToken = token.value;
+          }
+
           if (user) {
-            localStorage.setItem('token', user.value);
-            this.decodedToken = this.jwtHelper.decodeToken(user.tokenString);
-            this.userToken = user.value;
+            localStorage.setItem('mainPhoto', user.photoUrl);
+            this.changeMemberPhoto(user.photoUrl);
           }
         }),
         catchError(this.handleError)

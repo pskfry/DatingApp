@@ -40,7 +40,7 @@
         </div>
         <div class="col-sm-8">
             <tabset class="member-tabset">
-                <tab heading="Edit Profile" id="knownAsTab">
+                <tab heading="Edit Profile" id="knownAsTab"> 
                     <div class="card container border-top-0 rounded-0 p-3">
                         <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()">
                             <h4>Description</h4>
@@ -48,7 +48,7 @@
                             <h4 class="mt-4">Interests</h4>
                             <textarea class="form-control form-input" [(ngModel)]="user.interests" name="interests" rows="4"></textarea>
                             <h4 class="mt-4">Looking For</h4>
-                            <textarea class="form-control form-input" [(ngModel)]="user.lookingFor" name="lookingfor" rows="4"></textarea>
+                            <textarea class="form-control form-input" [(ngModel)]="user.lookingFor" name="lookingFor" rows="4"></textarea>
                             <div class="form-inline mt-4 p-0">
                                 <div class="form-group col-lg-6 col-md-12 p-1">
                                     <label class="col-lg-3 col-md-12" style="justify-content:left;" for="city">
@@ -60,7 +60,7 @@
                                     <label class="col-lg-3 col-md-12" style="justify-content:left;" for="city">
                                         <strong>Country:</strong>
                                     </label>
-                                    <input class="col-lg-8 col-md-12 form-control form-control-sm ml-1" type="text" name="Country" [(ngModel)]="user.country">
+                                    <input class="col-lg-8 col-md-12 form-control form-control-sm ml-1" type="text" name="country" [(ngModel)]="user.country">
                                 </div>
                             </div>
                         </form>
@@ -68,7 +68,7 @@
                 </tab>
                 <tab heading="Edit Photos">
                     <div class="card container border-top-0 rounded-0 pt-1">
-                        Editing photos will happen here
+                        <app-photo-editor [photos]="user.photos" (newMainPhoto)="updateMainPhoto($event)"></app-photo-editor>
                     </div>
                 </tab>
             </tabset>

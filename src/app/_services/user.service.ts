@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { User } from '../_models/User';
-import { tap, map, catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { AuthService } from './auth.service';
-import { NgForm } from '@angular/forms';
+import { Photo } from '../_models/Photo';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +12,7 @@ import { NgForm } from '@angular/forms';
 export class UserService {
   baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient,
-    private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   getUsers(): Observable<User[]> {
     return this.http
@@ -36,6 +34,20 @@ export class UserService {
 
   updateUser(id: number, user: User) {
     return this.http.put(this.baseUrl + 'users/' + id, user).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  deletePhoto(photoId: number, userId: number) {
+    return this.http.delete(this.baseUrl + 'users/' + userId + '/photos/' + photoId).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  setMainPhoto(userId: number, photo: Photo) {
+    localStorage.setItem('mainPhoto', photo.url);
+
+    return this.http.post(this.baseUrl + 'users/' + userId + '/photos/' + photo.id + '/setMain', photo).pipe(
       catchError(error => this.handleError(error))
     );
   }

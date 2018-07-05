@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { tokenName } from '@angular/compiler';
-import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,16 +10,13 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   model: any = {};
-  items: string[] = [
-    'The first choice!',
-    'And another choice for you.',
-    'but wait! A third!'
-  ];
+  photoUrl: string;
 
   constructor(public authService: AuthService, private alertifyService: AlertifyService,
-    private jwtHelper: JwtHelperService, private router: Router) { }
+    private router: Router) { }
 
   ngOnInit() {
+    this.authService.userMainPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 
   login() {
@@ -38,6 +32,7 @@ export class NavComponent implements OnInit {
   logout() {
     this.authService.userToken = null;
     localStorage.removeItem('token');
+    localStorage.remoteItem('mainPhoto');
     this.router.navigate(['/home']);
     this.alertifyService.success('Logged out!');
   }

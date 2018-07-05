@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
 import { AlertifyService } from '../../_services/alertify.service';
 import { UserService } from '../../_services/user.service';
 import { AuthService } from '../../_services/auth.service';
-import { Observer } from 'rxjs';
+import { Photo } from '../../_models/Photo';
 
 @Component({
   selector: 'app-member-edit',
@@ -26,6 +26,8 @@ export class MemberEditComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
+
+    console.log(this.user);
   }
 
   updateUser() {
@@ -38,6 +40,10 @@ export class MemberEditComponent implements OnInit {
         this.alertifyService.error(error);
       }
     );
+  }
+
+  updateMainPhoto(photo: Photo) {
+    this.user.photoUrl = photo.url;
   }
 
 }
