@@ -1,6 +1,6 @@
 <a [routerLink]="['/member/'+user.id]" routerLinkActive="active"> 
 <div class="card">
-  <img class="card-img-top" src="{{user.photoUrl}}" alt="{{user.knownAs}}'s Main Photo">
+  <img class="card-img-top" src="{{user.photoUrl ? user.photoUrl : '../../../assets/user.png'}}" alt="{{user.knownAs}}'s Main Photo">
   <div class="card-img-overlay">
     <h4 class="bg-warning d-inline px-2">{{user.knownAs}}</h4>
   </div>

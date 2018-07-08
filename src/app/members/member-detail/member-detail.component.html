@@ -4,7 +4,7 @@
   </div>
   <div class="row">
     <div class="card p-3 col-sm-4">
-      <img class="card-img-top mb-2" src="{{ user.photoUrl }}" alt="{{user.knownAs}}">
+      <img class="card-img-top mb-2" src="{{ user.photoUrl ? user.photoUrl : '../../../assets/user.png' }}" alt="{{user.knownAs}}">
       <div class="card-body p-0">
           <div>
             <strong>Location:</strong>

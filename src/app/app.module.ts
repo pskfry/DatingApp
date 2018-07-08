@@ -1,7 +1,7 @@
 // angular premade modules
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, Http } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -32,7 +32,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 
 // external libraries
-import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, BsDatepickerModule, BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from 'ngx-gallery';
@@ -78,7 +78,9 @@ export function tokenGetter() {
         skipWhenExpired: true
       }
     }),
-    FileUploadModule
+    FileUploadModule,
+    ReactiveFormsModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     AuthService,

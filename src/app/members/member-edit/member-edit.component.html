@@ -11,7 +11,7 @@
     </div>
     <div class="row">
         <div class="card p-3 col-sm-4">
-            <img class="card-img-top mb-2" src="{{ user.photoUrl }}" alt="{{user.knownAs}}">
+            <img class="card-img-top mb-2" src="{{user.photoUrl}}" alt="{{user.knownAs}}">
             <div class="card-body p-0">
                 <div>
                     <strong>Location:</strong>
@@ -68,7 +68,7 @@
                 </tab>
                 <tab heading="Edit Photos">
                     <div class="card container border-top-0 rounded-0 pt-1">
-                        <app-photo-editor [photos]="user.photos" (newMainPhoto)="updateMainPhoto($event)"></app-photo-editor>
+                        <app-photo-editor [photos]="user.photos"></app-photo-editor>
                     </div>
                 </tab>
             </tabset>

@@ -45,8 +45,6 @@ export class UserService {
   }
 
   setMainPhoto(userId: number, photo: Photo) {
-    localStorage.setItem('mainPhoto', photo.url);
-
     return this.http.post(this.baseUrl + 'users/' + userId + '/photos/' + photo.id + '/setMain', photo).pipe(
       catchError(error => this.handleError(error))
     );

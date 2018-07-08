@@ -51,17 +51,19 @@ export class PhotoEditorComponent implements OnInit {
 
   updateMainPhoto(photo: Photo) {
     this.userService.setMainPhoto(this.authService.decodedToken.nameid, photo)
-      .subscribe(next => {
+      .subscribe(() => {
         this.alertifyService.success('Main photo set!');
         this.currentMain = _.findWhere(this.photos, {isMainPhoto: true});
         this.currentMain.isMainPhoto = false;
         photo.isMainPhoto = true;
+        this.authService.changeMemberPhoto(photo.url);
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        user.photoUrl = photo.url;
+        localStorage.setItem('user', JSON.stringify(user));
       }, error => {
         this.alertifyService.error(error);
       });
-
-    this.newMainPhoto.emit(photo);
-    this.authService.changeMemberPhoto(photo.url);
   }
 
   initializeUploader() {
@@ -86,9 +88,18 @@ export class PhotoEditorComponent implements OnInit {
         url: res.url,
         description: res.description,
         dateAdded: res.dateAdded,
-        isMainPhoto: false,
+        isMainPhoto: res.isMainPhoto,
         userId: id
       };
+
+      if (photo.isMainPhoto) {
+        this.authService.changeMemberPhoto(photo.url);
+        this.authService.currentUser.photoUrl = photo.url;
+        localStorage.setItem(
+          'user',
+          JSON.stringify(this.authService.currentUser)
+        );
+      }
 
       this.photos.push(photo);
     };
