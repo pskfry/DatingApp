@@ -1,7 +1,58 @@
 <div class="container mt-3">
+  <div class="text-info">
+    <h3><span class="text-secondary">{{ pagination.totalItems }}</span> matches found</h3>
+  </div>
+  <div class="float-right">
+    <label style="margin-right:10px;">Order By:</label>
+    <div class="btn-group">
+      <button type="button" name="orderBy" class="btn btn-sm btn-danger" btnRadio="lastActive"
+        [(ngModel)]="userParams.orderBy"
+        (click)="loadUsers()">Last Active</button>
+      <button type="button" name="orderBy" class="btn btn-sm btn-success" btnRadio="created" 
+        [(ngModel)]="userParams.orderBy"
+        (click)="loadUsers()">Newest Members</button>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-2">
+  <form class="form-inline mb-3" #form="ngForm" (ngSubmit)="loadUsers()">
+    <label class="mb-2 mr-2" for="minAge">Age From</label>
+    <input id="minAge" name="minAge" type="number" class="form-control form-control-sm mr-sm-2 mb-2" style="width:70px"
+      [value]="userParams.minAge" [(ngModel)]="userParams.minAge">
+
+    <label class="mb-2 mr-2" for="maxAge">Age To</label>
+    <input id="maxAge" name="maxAge" type="number" class="form-control form-control-sm mr-sm-2 mb-2" style="width:70px" id="minAge"
+      [value]="userParams.maxAge" [(ngModel)]="userParams.maxAge">
+      
+    <label class="mb-2 mr-2" for="gender">Show</label>
+    <select id="gender" name="gender" class="form-control form-control-sm mb-2 mr-2"
+      [(ngModel)]="userParams.gender" [value]="userParams.gender">
+      <option *ngFor="let gender of genderList" [value]="gender.value">{{gender.display}}</option>
+    </select>
+
+    <button type="submit" class="btn btn-sm btn-primary mb-2 mr-2">Apply</button>
+    <button type="button" class="btn btn-sm btn-info mb-2"
+      (click)="resetFilters()">Reset Filter</button>
+  </form>
+
   <div class="card-deck">
     <div class="col-sm-12 col-md-6 col-lg-4 mb-3" *ngFor="let user of users">
       <app-member-card [user]="user"></app-member-card>
     </div>
+  </div>
+  
+</div>
+
+<div class="text-center">
+  <div class="d-inline-block">
+    <pagination [boundaryLinks]="true" 
+      [totalItems]="pagination.totalItems"
+      [itemsPerPage]="pagination.itemsPerPage"
+      [rotate]="false"
+      [maxSize]="5"
+      (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;" nextText="&rsaquo;" firstText="First" lastText="Last">
+    </pagination>
   </div>
 </div>

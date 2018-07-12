@@ -1,5 +1,5 @@
-import { Resolve, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from '../_models/User';
 import { Injectable } from '@angular/core';
@@ -8,18 +8,19 @@ import { UserService } from '../_services/user.service';
 
 @Injectable()
 export class MemberListResolver implements Resolve<User[]> {
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User[]> {
-        return this.userService.getUsers().pipe(
+    pageSize = 5;
+    pageNumber = 1;
+
+    constructor(private alertifyService: AlertifyService, private router: Router, private userService: UserService) { }
+
+    resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
+        return this.userService.getUsers(this.pageNumber, this.pageSize).pipe(
             catchError((error) => {
                 this.alertifyService.error(error);
                 this.router.navigate(['/']);
 
-                return Observable.throw(error);
+                return of(null);
             })
         );
-    }
-
-    constructor(private alertifyService: AlertifyService, private router: Router, private userService: UserService) {
-
     }
 }
