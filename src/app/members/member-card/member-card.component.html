@@ -1,4 +1,4 @@
-<a [routerLink]="['/member/'+user.id]" routerLinkActive="active"> 
+
 <div class="card">
   <img class="card-img-top" src="{{user.photoUrl ? user.photoUrl : '../../../assets/user.png'}}" alt="{{user.knownAs}}'s Main Photo">
   <div class="card-img-overlay">
@@ -7,12 +7,14 @@
   <div class="card-img-overlay buttons animate">
     <div class="col-sm-12 text-center btn-group position-relative" style="top:100px;">
       <div class="col-sm-4">
-        <button class="btn btn-secondary">
+        <button class="btn btn-secondary"
+          [routerLink]="['/member/' + user.id]" routerLinkActive="active" >
           <fa name="user"></fa>
         </button>
       </div>
       <div class="col-sm-4">
-        <button class="btn btn-secondary">
+        <button type="button" class="btn btn-secondary"
+          (click)="sendLike(user.id)">
           <fa name="heart"></fa>
         </button>
       </div>
@@ -29,4 +31,3 @@
     <p class="card-text text-info text-center">{{user.city}}, {{user.country}}</p>
   </div>
 </div>
-</a>

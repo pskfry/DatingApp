@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, observable, of } from 'rxjs';
 import { User } from '../_models/User';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -15,7 +15,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(page?, itemsPerPage?, userParams?: any): Observable<PaginatedResult<User[]>> {
+  getUsers(page?, itemsPerPage?, userParams?: any, likesParam?: string): Observable<PaginatedResult<User[]>> {
     const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
     let params = new HttpParams();
 
@@ -24,11 +24,19 @@ export class UserService {
       params = params.append('pageSize', itemsPerPage);
     }
 
-    if(userParams != null) {
+    if (userParams != null) {
       params = params.append('minAge', userParams.minAge);
       params = params.append('maxAge', userParams.maxAge);
       params = params.append('gender', userParams.gender);
       params = params.append('orderBy', userParams.orderBy);
+    }
+
+    if (likesParam === 'likers') {
+      params = params.append('likers', 'true');
+    }
+
+    if (likesParam === 'likees') {
+      params = params.append('likees', 'true');
     }
 
     return this.http
@@ -74,10 +82,20 @@ export class UserService {
     );
   }
 
+  sendLike(id: number, recipientId: number) {
+    return this.http.post(this.baseUrl + 'users/' + id + '/like/' + recipientId, {}).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
   private handleError(error: any) {
+    if (error.status === 400) {
+      return throwError(error.error);
+    }
+
     const applicationError = error.headers.get('Application-Error');
     if (applicationError) {
-      return throwError(error);
+      return throwError(error.error);
     }
 
     const serverError = error.json();
