@@ -4,7 +4,8 @@
   </div>
   <div class="row">
     <div class="card p-3 col-sm-4">
-      <img class="card-img-top mb-2" src="{{ user.photoUrl ? user.photoUrl : '../../../assets/user.png' }}" alt="{{user.knownAs}}">
+      <img class="card-img-top mb-2" alt="{{user.knownAs}}"
+      [src]="user.photoUrl ? user.photoUrl : '../../../assets/user.png'">
       <div class="card-body p-0">
           <div>
             <strong>Location:</strong>
@@ -27,13 +28,13 @@
         <div class="d-flex justify-content-center">
           <div class="btn-group">
             <button class="btn btn-primary mr-1">Like</button>
-            <button class="btn btn-secondary text-dark ml-1">Message</button>
+            <button class="btn btn-secondary text-dark ml-1" (click)="selectTab(3)">Message</button>
           </div>
         </div>
       </div>
     </div>
     <div class="col-sm-8">
-        <tabset class="member-tabset">
+        <tabset class="member-tabset" #memberTabs>
           <tab heading="About {{ user.knownAs }}" id="knownAsTab">
             <div class="card container border-top-0 rounded-0 pt-1">
               <h4 class="text-info">Description</h4>
@@ -57,7 +58,7 @@
           </tab>
           <tab heading="Messages">
               <div class="card container border-top-0 rounded-0 pt-1">
-                messages go here
+                <app-member-messages [userId]="user.id"></app-member-messages>
               </div>
           </tab>
         </tabset>

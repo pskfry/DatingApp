@@ -6,6 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Photo } from '../_models/Photo';
 import { PaginatedResult } from '../_models/Pagination';
+import { Message } from '../_models/Message';
 
 @Injectable({
   providedIn: 'root'
@@ -86,6 +87,56 @@ export class UserService {
     return this.http.post(this.baseUrl + 'users/' + id + '/like/' + recipientId, {}).pipe(
       catchError(error => this.handleError(error))
     );
+  }
+
+  getMessages(id: number, page?: number, itemsPerPage?: number, messageContainer?: string) {
+    const paginatedResult: PaginatedResult<Message[]> = new PaginatedResult<Message[]>();
+    let params = new HttpParams();
+    params = params.append('MessageContainer', messageContainer);
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page.toString());
+      params = params.append('itemsPerPage', itemsPerPage.toString());
+    }
+
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages', {observe: 'response', params}).pipe(
+      map(response => {
+        paginatedResult.result = response.body;
+        if (response.headers.get('Pagination') != null) {
+          paginatedResult.pagination = JSON.parse(
+            response.headers.get('Pagination')
+          );
+        }
+        return paginatedResult;
+      })
+    );
+  }
+
+  getMessageThread(id: number, recipientId: number) {
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages/thread/' + recipientId, {observe: 'response'})
+    .pipe(
+      map(res => res.body),
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  sendMessage(id: number, message: Message) {
+    return this.http.post(this.baseUrl + 'users/' + id + '/messages', message)
+      .pipe(
+        catchError(error => this.handleError(error))
+      );
+  }
+
+  deleteMessage(id: number, userId: number) {
+    return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + id, {})
+      .pipe(
+        catchError(error => this.handleError(error))
+      );
+  }
+
+  markMessageAsRead(userId: number, messageId: number) {
+    return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + messageId + '/read', {})
+      .subscribe();
   }
 
   private handleError(error: any) {
