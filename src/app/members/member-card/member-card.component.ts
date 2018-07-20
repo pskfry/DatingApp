@@ -21,7 +21,6 @@ export class MemberCardComponent implements OnInit {
 
   sendLike(id: number) {
     this.userService.sendLike(this.authService.decodedToken.nameid, id).subscribe((data) => {
-      console.log(data);
       this.alertifyService.success('You have liked: ' + this.user.knownAs);
     }, error => {
       this.alertifyService.error(error);
